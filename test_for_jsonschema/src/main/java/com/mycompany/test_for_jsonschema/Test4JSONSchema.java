@@ -8,16 +8,14 @@ package com.mycompany.test_for_jsonschema;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
 import org.everit.json.schema.loader.SchemaLoader;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+
 
 /**
  *
@@ -30,9 +28,9 @@ public class Test4JSONSchema {
     
     public static void main(String[] args) throws FileNotFoundException{
         
-        
         String fileName = "file1.json";
         String schemaName = "schema1.json";
+        boolean ok = true;
         
         System.out.println("Check "+fileName+" with "+schemaName);
         
@@ -47,9 +45,8 @@ public class Test4JSONSchema {
         JSONTokener jsonDataFile = new JSONTokener(new FileInputStream(jsonData));
         JSONObject jsonObject = new JSONObject(jsonDataFile);
         
-        //validate
+        //validate and validation error handling
         Schema schemaValidator = SchemaLoader.load(jsonSchema);
-        
         try {
             schemaValidator.validate(jsonObject);
         }
@@ -60,19 +57,20 @@ public class Test4JSONSchema {
                 System.out.println(v);
             });
             
-            return;
+            ok = false;
         }
-        
         //if pass:
+        if (ok){
+            System.out.println(jsonObject.getInt("id"));
+            System.out.println(jsonObject.getJSONObject("rectangle").getInt("a"));
+            System.out.println(jsonObject.getJSONObject("rectangle").getInt("b"));
+        }
+        //--------------------------------------------------
         
-        System.out.println(jsonObject.getInt("id"));
-        System.out.println(jsonObject.getJSONObject("rectangle").getInt("a"));
-        System.out.println(jsonObject.getJSONObject("rectangle").getInt("b"));
+        //generate schema from class:
+        TestSchemaGenerator tsg = new TestSchemaGenerator();
+        tsg.generate();
+
         
-  
-    }
-    
-     
-    
-    
+    } 
 }

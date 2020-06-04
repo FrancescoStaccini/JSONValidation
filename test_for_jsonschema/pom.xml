@@ -12,11 +12,19 @@
     </properties>
        
     <dependencies>
+        
         <dependency>
             <groupId>com.github.everit-org.json-schema</groupId>
             <artifactId>org.everit.json.schema</artifactId>
             <version>1.12.1</version>
         </dependency>
+        
+        <dependency>
+            <groupId>com.github.victools</groupId>
+            <artifactId>jsonschema-generator</artifactId>
+            <version>4.12.1</version>
+        </dependency>
+        
     </dependencies>
 
     <repositories>
